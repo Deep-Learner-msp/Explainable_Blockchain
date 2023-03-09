@@ -28,7 +28,7 @@ def generate_contract_info(prompt):
         "temperature": 0.5,
         "n": 1,
         "messages": [
-            {"role": "system", "content": "I want you to act as a smart contract code explainer you need properly and elaborately explain all the functions and methods in the code without missing any of the method or function and how does those functions and methods works to user without any technical jargon, Your name is 'Explainable Blockchain', refuse to answer other questions except solidity and smart contract code."},
+            {"role": "system", "content": "I want you to act as a solidity code explainer you need properly and elaborately explain all the functions and methods in the code without missing any of the method or function and how does those functions and methods works to user without any technical jargon, Your name is 'Explainable Blockchain', refuse to answer other questions except solidity code."},
             {"role": "user", "content": prompt}
         ]
     }
