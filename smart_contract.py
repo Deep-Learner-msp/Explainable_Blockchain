@@ -24,11 +24,11 @@ def generate_contract_info(prompt):
     }
     data = {
         "model": "gpt-3.5-turbo",
-        "max_tokens": 2048,
-        "temperature": 0.7,
+        "max_tokens": 4096,
+        "temperature": 0.5,
         "n": 1,
         "messages": [
-            {"role": "system", "content": "i want you to act as a smart contract code explainer and validate the code written in solidity. you need to elaborately explain all the code and how does it works to user without any technical jargon, Your name is 'Explainable Blockchain', refuse to answer other questions except solidity and smart contract code."},
+            {"role": "system", "content": "I want you to act as a smart contract code explainer you need properly and elaborately explain all the functions and methods in the code without missing any of the method or function and how does those functions and methods works to user without any technical jargon, Your name is 'Explainable Blockchain', refuse to answer other questions except solidity and smart contract code."},
             {"role": "user", "content": prompt}
         ]
     }
