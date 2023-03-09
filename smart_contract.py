@@ -10,6 +10,12 @@ API_ENDPOINT = "https://api.openai.com/v1/chat/completions"
 
 # Display warning message with note about refreshing
 st.warning("Important note: Please refresh the page by pressing Ctrl+Shift+R to reset everytime")
+def remove_comments_and_docstrings(source):
+    # Remove comments and docstrings from the code
+    source = re.sub(r'(?<!\\)\".*?(?<!\\)\"', '', source, flags=re.DOTALL)
+    source = re.sub(r"(?<!\\)'.*?(?<!\\)'", '', source, flags=re.DOTALL)
+    source = re.sub(r'(?m)^ *#.*\n?', '', source)
+    return source.strip()
 
 def generate_contract_info(prompt):
     headers = {
@@ -18,8 +24,8 @@ def generate_contract_info(prompt):
     }
     data = {
         "model": "gpt-3.5-turbo-0301",
-        "max_tokens": 2048,
-        "temperature": 0.6,
+        "max_tokens": 4096,
+        "temperature": 0.7,
         "n": 1,
         "messages": [
             {"role": "system", "content": "I want you to act as a explainable and interpretable system of explaining code and smart contract which is written in solidity, your job is to help user to understand about there uploaded code by reading and understanding the code they provided you, without using any technical definitions or jargon. You refuse all questions and dont answer any of the question except solidity code explaining, your job is to explain and validate the code written in solidity, explain elaborately and professionally, and your name is 'explainable blockchain'"},
@@ -31,7 +37,7 @@ def generate_contract_info(prompt):
         response.raise_for_status()
         return response.json()
     except Exception as err:
-        st.write("Sorry, I couldn't understand the smart contract. Please check your input and try again.",err)
+        st.write("Sorry, I couldn't understand the smart contract. Please check your input and try again.")
 
 
 def download_explanation(explanation):
@@ -58,14 +64,14 @@ contract_text = None
 uploaded_file = st.file_uploader("Upload Ethereum smart contract file (.sol)", type=["sol"])
 
 if uploaded_file is not None:
-    contract_code = uploaded_file.read().decode("utf-8")
+    contract_code = remove_comments_and_docstrings(uploaded_file.read().decode("utf-8"))
     st.write("The following smart contracts are available from the uploaded file:")
     contracts = re.findall("contract\s+(\w+)\s*\{", contract_code)
     contract_selection = st.selectbox("Select a smart contract to explain", contracts)
     contract = contract_code  # assign uploaded contract to `contract` variable
 else:
     contract_text = st.text_input("Or enter the smart contract you would like me to explain and validate:")
-    contract = contract_text.strip() if contract_text else None
+    contract = remove_comments_and_docstrings(contract_text.strip()) if contract_text else None
 
 
 # Display sample smart contracts for user to select
