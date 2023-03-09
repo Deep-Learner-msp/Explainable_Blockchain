@@ -17,7 +17,7 @@ def generate_contract_info(prompt):
         "Authorization": f"Bearer {os.environ['OPENAI_API_KEY']}"
     }
     data = {
-        "model": "gpt-3.5-turbo",
+        "model": "gpt-3.5-turbo-0301",
         "max_tokens": 2048,
         "temperature": 0.6,
         "n": 1,
@@ -31,7 +31,7 @@ def generate_contract_info(prompt):
         response.raise_for_status()
         return response.json()
     except Exception as err:
-        st.write("Sorry, I couldn't understand the smart contract. Please check your input and try again.")
+        st.write("Sorry, I couldn't understand the smart contract. Please check your input and try again.",err)
 
 
 def download_explanation(explanation):
