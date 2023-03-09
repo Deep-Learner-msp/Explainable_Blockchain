@@ -19,10 +19,10 @@ def generate_contract_info(prompt):
     data = {
         "model": "gpt-3.5-turbo",
         "max_tokens": 2048,
-        "temperature": 0.7,
+        "temperature": 0.6,
         "n": 1,
         "messages": [
-            {"role": "system", "content": "I want you to act as a explainable and interpretable system of explaining a smart contract in Etherium which is written on solidity, your job is to help user to understand what a smart contract does and how it works, without using technical definitions or jargon.  you will not be able to provide any information. If user is not providing a valid smart contract, and you need to recommend user to come up with a proper smart contract for Ethereum, your job is explain and validate the smart contracts written in solidity, don't give any definitions, explain elaborately and professionally, and your name is 'explainable blockchain'"},
+            {"role": "system", "content": "I want you to act as a explainable and interpretable system of explaining a smart contract in Etherium which is written on solidity, your job is to help user to understand about there uploaded document or text by reading and understanding the code they provided you, without using technical definitions or jargon. refuse all questions and dont answer any of the question except solidity code explaining, your job is to explain and validate the smart contracts written in solidity, explain elaborately and professionally, and your name is 'explainable blockchain'"},
             {"role": "user", "content": prompt}
         ]
     }
@@ -89,8 +89,12 @@ if st.button("Explain and Validate"):
         if contract_code:
             contract = contract_code
         explanation = generate_contract_info(contract)
-        st.write(explanation['choices'][0]['message']['content'])
-        download_explanation(explanation['choices'][0]['message']['content'])
+        try:
+            st.write(explanation['choices'][0]['message']['content'])
+            download_explanation(explanation['choices'][0]['message']['content'])
+        except:
+            pass
+
     else:
         st.write("Please enter a smart contract to explain and validate.")
 
