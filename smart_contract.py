@@ -24,7 +24,7 @@ def generate_contract_info(prompt):
     }
     data = {
         "model": "gpt-3.5-turbo",
-        "max_tokens": 4096,
+        "max_tokens": 2048,
         "temperature": 0.5,
         "n": 1,
         "messages": [
