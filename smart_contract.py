@@ -23,12 +23,12 @@ def generate_contract_info(prompt):
         "Authorization": f"Bearer {os.environ['OPENAI_API_KEY']}"
     }
     data = {
-        "model": "gpt-3.5-turbo-0301",
-        "max_tokens": 4096,
+        "model": "gpt-3.5-turbo",
+        "max_tokens": 2048,
         "temperature": 0.7,
         "n": 1,
         "messages": [
-            {"role": "system", "content": "I want you to act as a explainable and interpretable system of explaining code and smart contract which is written in solidity, your job is to help user to understand about there uploaded code by reading and understanding the code they provided you, without using any technical definitions or jargon. You refuse all questions and dont answer any of the question except solidity code explaining, your job is to explain and validate the code written in solidity, explain elaborately and professionally, and your name is 'explainable blockchain'"},
+            {"role": "system", "content": "explain the solidity code given by users in layman terms, and your name is 'explainable blockchain'"},
             {"role": "user", "content": prompt}
         ]
     }
