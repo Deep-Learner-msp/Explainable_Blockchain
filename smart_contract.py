@@ -65,6 +65,7 @@ uploaded_file = st.file_uploader("Upload Ethereum smart contract file (.sol)", t
 
 if uploaded_file is not None:
     contract_code = remove_comments_and_docstrings(uploaded_file.read().decode("utf-8"))
+    print(contract_code)
     st.write("The following smart contracts are available from the uploaded file:")
     contracts = re.findall("contract\s+(\w+)\s*\{", contract_code)
     contract_selection = st.selectbox("Select a smart contract to explain", contracts)
